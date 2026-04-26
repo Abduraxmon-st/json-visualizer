@@ -139,10 +139,10 @@ const Sidebar = ({ dictionary }: SidebarProps) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <Button type="button">{dictionary.visualizeLabel}</Button>
               <Button onClick={clearJsonInput} type="button" variant="outline">
                 {dictionary.clearLabel}
               </Button>
+              <Button type="button">{dictionary.visualizeLabel}</Button>
             </div>
           </div>
         </div>

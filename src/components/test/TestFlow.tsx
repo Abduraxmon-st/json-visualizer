@@ -92,7 +92,7 @@ export default function TestFlow({ dictionary }: { dictionary: FlowDictionary })
         // nodeTypes={nodeTypes} // custom card
       >
         <Background bgColor='#1c1e1f'/>
-        <Controls /> {/* Control panel */}
+        <Controls position='bottom-center' orientation='horizontal'/> {/* Control panel */}
         <MiniMap nodeStrokeWidth={3} />
         {/* <ShapeGrid
           speed={0}
