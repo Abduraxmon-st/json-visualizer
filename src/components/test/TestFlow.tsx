@@ -1,5 +1,5 @@
 "use client"
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type CSSProperties } from 'react';
 import {
   ReactFlow,
   applyNodeChanges,
@@ -18,6 +18,7 @@ import {
   type NodeChange,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { useTheme } from '@/context/ThemeContext';
 import type { Dictionary } from '@/i18n/dictionaries';
 // custom card
 // export function TextUpdaterNode(props) {
@@ -58,6 +59,19 @@ const onNodeDrag: OnNodeDrag = (_, node) => {
 };
 
 export default function TestFlow({ dictionary }: { dictionary: FlowDictionary }) {
+  const { theme } = useTheme();
+  const backgroundColor = theme === 'dark' ? '#1c1e1f' : '#fbfbfb';
+  const miniMapColors = theme === 'dark'
+    ? { bgColor: '#242729', maskColor: '#11131580' }
+    : { bgColor: '#f4f4f5', maskColor: '#d9dde450' };
+  const controlsStyle = {
+    '--xy-controls-button-background-color': theme === 'dark' ? '#242729' : '#ffffff',
+    '--xy-controls-button-background-color-hover': theme === 'dark' ? '#303437' : '#f4f4f5',
+    '--xy-controls-button-border-color': theme === 'dark' ? '#ffffff1a' : '#e4e4e7',
+    '--xy-controls-button-color': theme === 'dark' ? '#ffffff' : '#18181b',
+    '--xy-controls-button-color-hover': theme === 'dark' ? '#ffffff' : '#09090b',
+  } as CSSProperties;
+
   // hamma cardlar
   const [nodes, setNodes] = useState<FlowNode[]>(() => getInitialNodes(dictionary));
   // cardlar line ulanishi 
@@ -91,9 +105,13 @@ export default function TestFlow({ dictionary }: { dictionary: FlowDictionary })
         fitView // barcha cardlarni ekranga sigdirish
         // nodeTypes={nodeTypes} // custom card
       >
-        <Background bgColor='#1c1e1f'/>
-        <Controls position='bottom-center' orientation='horizontal'/> {/* Control panel */}
-        <MiniMap nodeStrokeWidth={3} />
+        <Background bgColor={backgroundColor}/>
+        <Controls
+          position='bottom-center'
+          orientation='horizontal'
+          style={controlsStyle}
+        /> {/* Control panel */}
+        <MiniMap nodeStrokeWidth={3} {...miniMapColors}/>
         {/* <ShapeGrid
           speed={0}
           squareSize={40}

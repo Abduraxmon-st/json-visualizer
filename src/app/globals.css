@@ -8,6 +8,7 @@
 @theme inline {
   --color-bgColorPollet: #1c1e1f;
   --color-bgColor: #1c1e1f;
+  --color-pageBackground: #fbfbfb;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-wotfard);

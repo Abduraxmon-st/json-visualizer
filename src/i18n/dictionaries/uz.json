@@ -21,6 +21,7 @@
     "closeLabel": "Sidebarni yopish",
     "textareaLabel": "JSON",
     "visualizeLabel": "Visualize",
+    "convertLabel": "Convert",
     "clearLabel": "Clear",
     "positionLabel": "Position",
     "positionOptions": {

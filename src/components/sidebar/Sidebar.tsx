@@ -5,6 +5,7 @@ import { Braces, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/context/SidebarContext";
+import { useWorkspaceView } from "@/context/ViewContext";
 import { cn } from "@/lib/utils";
 
 type SidebarDictionary = Dictionary["sidebar"];
@@ -19,8 +20,10 @@ const positionOptions: NodePosition[] = ["top", "left", "bottom", "right"];
 const Sidebar = ({ dictionary }: SidebarProps) => {
   const isOpen = useSidebar((state) => state.isOpen);
   const toggleSidebar = useSidebar((state) => state.toggleSidebar);
+  const activeView = useWorkspaceView((state) => state.activeView);
   const [jsonInput, setJsonInput] = useState("");
   const [position, setPosition] = useState<NodePosition>("top");
+  const isTypeScriptView = activeView === "typescript";
 
   const clearJsonInput = () => {
     setJsonInput("");
@@ -107,42 +110,48 @@ const Sidebar = ({ dictionary }: SidebarProps) => {
             ) : null}
           </div>
           <div className="grid gap-2">
-            <div className="grid gap-1.5">
-              <p className="text-xs font-medium text-muted-foreground">
-                {dictionary.positionLabel}
-              </p>
-              <div
-                aria-label={dictionary.positionLabel}
-                className="grid grid-cols-4 gap-1 rounded-2xl border border-border bg-background/70 p-1 dark:bg-input/20"
-                role="group"
-              >
-                {positionOptions.map((option) => {
-                  const isActive = option === position;
+            {isTypeScriptView ? null : (
+              <div className="grid gap-1.5">
+                <p className="text-xs font-medium text-muted-foreground">
+                  {dictionary.positionLabel}
+                </p>
+                <div
+                  aria-label={dictionary.positionLabel}
+                  className="grid grid-cols-4 gap-1 rounded-2xl border border-border bg-background/70 p-1 dark:bg-input/20"
+                  role="group"
+                >
+                  {positionOptions.map((option) => {
+                    const isActive = option === position;
 
-                  return (
-                    <button
-                      aria-pressed={isActive}
-                      className={cn(
-                        "h-7 rounded-xl px-1 text-xs font-medium capitalize transition-colors",
-                        isActive
-                          ? "bg-primary text-primary-foreground shadow-sm"
-                          : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
-                      )}
-                      key={option}
-                      onClick={() => setPosition(option)}
-                      type="button"
-                    >
-                      {dictionary.positionOptions[option]}
-                    </button>
-                  );
-                })}
+                    return (
+                      <button
+                        aria-pressed={isActive}
+                        className={cn(
+                          "h-7 rounded-xl px-1 text-xs font-medium capitalize transition-colors",
+                          isActive
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                        )}
+                        key={option}
+                        onClick={() => setPosition(option)}
+                        type="button"
+                      >
+                        {dictionary.positionOptions[option]}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
             <div className="grid grid-cols-2 gap-2">
               <Button onClick={clearJsonInput} type="button" variant="outline">
                 {dictionary.clearLabel}
               </Button>
-              <Button type="button">{dictionary.visualizeLabel}</Button>
+              <Button type="button">
+                {isTypeScriptView
+                  ? dictionary.convertLabel
+                  : dictionary.visualizeLabel}
+              </Button>
             </div>
           </div>
         </div>

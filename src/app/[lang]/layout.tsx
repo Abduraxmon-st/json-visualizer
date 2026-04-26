@@ -55,7 +55,7 @@ export default async function RootLayout({
       className="h-full antialiased"
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-white dark:bg-slate-950 text-black dark:text-white transition-colors">
+      <body className="min-h-full flex flex-col bg-pageBackground text-black transition-colors dark:bg-slate-950 dark:text-white">
         <RootLayoutClient>
           <Navbar dictionary={dictionary.navbar} locale={lang} />
           <Sidebar dictionary={dictionary.sidebar} />

@@ -21,6 +21,7 @@
     "closeLabel": "Закрыть sidebar",
     "textareaLabel": "JSON",
     "visualizeLabel": "Visualize",
+    "convertLabel": "Convert",
     "clearLabel": "Clear",
     "positionLabel": "Position",
     "positionOptions": {
