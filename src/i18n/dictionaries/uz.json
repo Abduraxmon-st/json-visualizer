@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "title": "JSON Vizualizator",
+    "description": "JSON ma'lumotlarni interaktiv flow ko'rinishida ko'rish vositasi"
+  },
+  "navbar": {
+    "brand": "JSON Vizualizator",
+    "languageLabel": "Tilni tanlash",
+    "viewToggleLabel": "Ish rejimini tanlash",
+    "visualizeViewLabel": "Visualize",
+    "typescriptViewLabel": "TypeScript",
+    "themeToggleLabel": "Mavzuni almashtirish",
+    "themeLightLabel": "Yorug' mavzu",
+    "themeDarkLabel": "Qorong'i mavzu"
+  },
+  "sidebar": {
+    "label": "JSON paneli",
+    "title": "JSON kiriting",
+    "description": "Flow uchun ma'lumot",
+    "openLabel": "Sidebarni ochish",
+    "closeLabel": "Sidebarni yopish",
+    "textareaLabel": "JSON",
+    "visualizeLabel": "Visualize",
+    "clearLabel": "Clear",
+    "positionLabel": "Position",
+    "positionOptions": {
+      "top": "Top",
+      "left": "Left",
+      "bottom": "Bottom",
+      "right": "Right"
+    },
+    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}"
+  },
+  "flow": {
+    "nodeOneLabel": "Tugun 1",
+    "nodeTwoLabel": "Tugun 2"
+  },
+  "typescript": {
+    "title": "TypeScript",
+    "description": "JSON struktura uchun type maydoni",
+    "typeNameLabel": "Type nomi",
+    "optionsLabel": "Format",
+    "interfaceLabel": "Interface",
+    "optionalLabel": "Optional fieldlar",
+    "outputLabel": "TypeScript output",
+    "copyLabel": "Copy",
+    "placeholder": "interface Root {\n  // JSON type shu yerda chiqadi\n}"
+  }
+}

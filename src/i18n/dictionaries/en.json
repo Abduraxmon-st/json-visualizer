@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "title": "JSON Visualizer",
+    "description": "A tool for viewing JSON data as an interactive flow"
+  },
+  "navbar": {
+    "brand": "JSON Visualizer",
+    "languageLabel": "Select language",
+    "viewToggleLabel": "Select workspace view",
+    "visualizeViewLabel": "Visualize",
+    "typescriptViewLabel": "TypeScript",
+    "themeToggleLabel": "Toggle theme",
+    "themeLightLabel": "Light theme",
+    "themeDarkLabel": "Dark theme"
+  },
+  "sidebar": {
+    "label": "JSON panel",
+    "title": "Enter JSON",
+    "description": "Data for the flow",
+    "openLabel": "Open sidebar",
+    "closeLabel": "Close sidebar",
+    "textareaLabel": "JSON",
+    "visualizeLabel": "Visualize",
+    "clearLabel": "Clear",
+    "positionLabel": "Position",
+    "positionOptions": {
+      "top": "Top",
+      "left": "Left",
+      "bottom": "Bottom",
+      "right": "Right"
+    },
+    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}"
+  },
+  "flow": {
+    "nodeOneLabel": "Node 1",
+    "nodeTwoLabel": "Node 2"
+  },
+  "typescript": {
+    "title": "TypeScript",
+    "description": "Type workspace for JSON structures",
+    "typeNameLabel": "Type name",
+    "optionsLabel": "Format",
+    "interfaceLabel": "Interface",
+    "optionalLabel": "Optional fields",
+    "outputLabel": "TypeScript output",
+    "copyLabel": "Copy",
+    "placeholder": "interface Root {\n  // JSON type will appear here\n}"
+  }
+}

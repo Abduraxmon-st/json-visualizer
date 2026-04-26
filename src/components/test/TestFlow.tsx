@@ -14,11 +14,11 @@ import {
   OnEdgesChange,
   OnConnect,
   OnNodeDrag,
-  Handle,
-  Position,
+  type Node,
+  type NodeChange,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import ShapeGrid from '../background/ShapeGrid';
+import type { Dictionary } from '@/i18n/dictionaries';
 // custom card
 // export function TextUpdaterNode(props) {
 //   const onChange = useCallback((evt) => {
@@ -40,11 +40,15 @@ import ShapeGrid from '../background/ShapeGrid';
 //   textUpdater: TextUpdaterNode,
 // };
 
-// cardlar
-const initialNodes = [
-  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
-  { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-];
+type FlowDictionary = Dictionary["flow"];
+type FlowNode = Node<{ label: string }>;
+
+function getInitialNodes(dictionary: FlowDictionary): FlowNode[] {
+  return [
+    { id: 'n1', position: { x: 0, y: 0 }, data: { label: dictionary.nodeOneLabel } },
+    { id: 'n2', position: { x: 0, y: 100 }, data: { label: dictionary.nodeTwoLabel } },
+  ];
+}
 
 // deafult ulanish chiziqlar bilan
 const initialEdges = [{ id: 'n1-n2', source: 'n1', target: 'n2' }];
@@ -53,15 +57,15 @@ const onNodeDrag: OnNodeDrag = (_, node) => {
   console.log('drag event', node.data);
 };
 
-export default function TestFlow() {
+export default function TestFlow({ dictionary }: { dictionary: FlowDictionary }) {
   // hamma cardlar
-  const [nodes, setNodes] = useState(initialNodes);
+  const [nodes, setNodes] = useState<FlowNode[]>(() => getInitialNodes(dictionary));
   // cardlar line ulanishi 
   const [edges, setEdges] = useState(initialEdges);
 
   // cardlar drag ozgarish, position ozgarish event 
-  const onNodesChange: OnNodesChange = useCallback(
-    (changes: any[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
+  const onNodesChange: OnNodesChange<FlowNode> = useCallback(
+    (changes: NodeChange<FlowNode>[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
   );
   // cardlar line boglanishi ozgarish event

@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "title": "JSON Визуализатор",
+    "description": "Инструмент для просмотра JSON-данных в интерактивном flow-виде"
+  },
+  "navbar": {
+    "brand": "JSON Визуализатор",
+    "languageLabel": "Выбор языка",
+    "viewToggleLabel": "Выбор режима",
+    "visualizeViewLabel": "Visualize",
+    "typescriptViewLabel": "TypeScript",
+    "themeToggleLabel": "Переключить тему",
+    "themeLightLabel": "Светлая тема",
+    "themeDarkLabel": "Темная тема"
+  },
+  "sidebar": {
+    "label": "JSON-панель",
+    "title": "Введите JSON",
+    "description": "Данные для flow",
+    "openLabel": "Открыть sidebar",
+    "closeLabel": "Закрыть sidebar",
+    "textareaLabel": "JSON",
+    "visualizeLabel": "Visualize",
+    "clearLabel": "Clear",
+    "positionLabel": "Position",
+    "positionOptions": {
+      "top": "Top",
+      "left": "Left",
+      "bottom": "Bottom",
+      "right": "Right"
+    },
+    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}"
+  },
+  "flow": {
+    "nodeOneLabel": "Узел 1",
+    "nodeTwoLabel": "Узел 2"
+  },
+  "typescript": {
+    "title": "TypeScript",
+    "description": "Поле типов для JSON-структуры",
+    "typeNameLabel": "Имя типа",
+    "optionsLabel": "Формат",
+    "interfaceLabel": "Interface",
+    "optionalLabel": "Optional поля",
+    "outputLabel": "TypeScript output",
+    "copyLabel": "Copy",
+    "placeholder": "interface Root {\n  // JSON type появится здесь\n}"
+  }
+}
