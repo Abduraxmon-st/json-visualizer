@@ -86,6 +86,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --workspace-scrollbar-track: oklch(0.97 0 0 / 70%);
+  --workspace-scrollbar-thumb: oklch(0.708 0 0 / 70%);
+  --workspace-scrollbar-thumb-hover: oklch(0.556 0 0 / 85%);
 }
 
 .dark {
@@ -120,6 +123,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --workspace-scrollbar-track: oklch(1 0 0 / 6%);
+  --workspace-scrollbar-thumb: oklch(1 0 0 / 22%);
+  --workspace-scrollbar-thumb-hover: oklch(1 0 0 / 34%);
 }
 
 @layer base {
@@ -141,5 +147,34 @@
   textarea,
   select {
     font-family: var(--font-wotfard);
+  }
+}
+
+@layer utilities {
+  .workspace-scrollbar {
+    scrollbar-color: var(--workspace-scrollbar-thumb) var(--workspace-scrollbar-track);
+    scrollbar-width: thin;
+  }
+
+  .workspace-scrollbar::-webkit-scrollbar {
+    height: 0.625rem;
+    width: 0.625rem;
+  }
+
+  .workspace-scrollbar::-webkit-scrollbar-track {
+    background: var(--workspace-scrollbar-track);
+    border-radius: 999px;
+  }
+
+  .workspace-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--workspace-scrollbar-thumb);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  .workspace-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--workspace-scrollbar-thumb-hover);
+    background-clip: content-box;
   }
 }

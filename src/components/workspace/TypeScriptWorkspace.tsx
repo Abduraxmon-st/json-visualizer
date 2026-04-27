@@ -99,13 +99,13 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
             value={rootName}
           />
 
-          <label
+          {/* <label
             className="text-xs font-medium text-muted-foreground"
             htmlFor="typescript-options"
           >
             {dictionary.optionsLabel}
-          </label>
-          <div
+          </label> */}
+          {/* <div
             className="grid gap-2 text-sm text-muted-foreground"
             id="typescript-options"
           >
@@ -117,13 +117,13 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
               <input checked readOnly type="checkbox" />
               {dictionary.optionalLabel}
             </label>
-          </div>
+          </div> */}
         </section>
 
         <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border bg-white/95 shadow-sm backdrop-blur dark:bg-bgColor/95">
           <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 px-3 text-sm font-medium text-muted-foreground">
             <div className="flex min-w-0 items-center gap-3">
-              <span className="shrink-0">{dictionary.outputLabel}</span>
+              {/* <span className="shrink-0">{dictionary.outputLabel}</span> */}
               <div
                 aria-label={dictionary.outputTabsLabel}
                 className="flex items-center rounded-full border border-border bg-background/70 p-0.5 dark:bg-input/20"
@@ -171,11 +171,11 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
               {dictionary.clearLabel}
             </Button>
           </div>
-          <div className="min-h-0 flex-1 overflow-auto p-4">
+          <div className="workspace-scrollbar min-h-0 flex-1 overflow-auto p-4">
             {activeOutputTab === "json" && jsonValue ? (
-              <div className="rounded-lg border border-border bg-background/70 p-3 dark:bg-input/20 h-full">
+              <div className="rounded-lg border border-border bg-background/70 p-3 dark:bg-input/20 min-h-full">
                 <JsonView
-                  collapsed={1}
+                  collapsed={100}
                   displayDataTypes={false}
                   enableClipboard
                   keyName={rootName}
@@ -184,24 +184,26 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
                     ...jsonViewTheme,
                     backgroundColor: "transparent",
                     fontFamily: "var(--font-mono, monospace)",
-                    fontSize: "13px",
+                    fontSize: "14px",
                   }}
                   value={jsonValue}
                 />
               </div>
             ) : (
-              <pre
-                className={cn(
-                  "font-mono text-sm leading-6",
-                  status === "error"
-                    ? "text-destructive"
-                    : output
-                      ? "text-foreground"
-                      : "text-muted-foreground",
-                )}
-              >
-                <code>{outputText}</code>
-              </pre>
+              <div className="rounded-lg border border-border bg-background/70 p-3 dark:bg-input/20 min-h-full">
+                <pre
+                  className={cn(
+                    "font-mono text-sm leading-6",
+                    status === "error"
+                      ? "text-destructive"
+                      : output
+                        ? "text-foreground"
+                        : "text-muted-foreground",
+                  )}
+                >
+                  <code>{outputText}</code>
+                </pre>
+              </div>
             )}
           </div>
         </section>
