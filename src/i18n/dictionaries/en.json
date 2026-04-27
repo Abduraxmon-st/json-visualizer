@@ -30,7 +30,8 @@
       "bottom": "Bottom",
       "right": "Right"
     },
-    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}"
+    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}",
+    "typescriptPlaceholder": "{\n  \"cats\": [\n    { \"name\": \"Kittin\" },\n    { \"name\": \"Mittin\" }\n  ],\n  \"favoriteNumber\": 42,\n  \"favoriteWord\": \"Hello\"\n}"
   },
   "flow": {
     "nodeOneLabel": "Node 1",
@@ -44,7 +45,14 @@
     "interfaceLabel": "Interface",
     "optionalLabel": "Optional fields",
     "outputLabel": "TypeScript output",
+    "outputTabsLabel": "Output view",
+    "typeTabLabel": "Type",
+    "jsonTabLabel": "JSON",
     "copyLabel": "Copy",
+    "clearLabel": "Clear",
+    "copiedLabel": "Copied",
+    "emptyJsonMessage": "Enter JSON.",
+    "invalidJsonMessage": "Invalid JSON format.",
     "placeholder": "interface Root {\n  // JSON type will appear here\n}"
   }
 }

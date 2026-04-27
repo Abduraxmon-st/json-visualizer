@@ -103,15 +103,15 @@ export default function TestFlow({ dictionary }: { dictionary: FlowDictionary })
         onEdgesChange={onEdgesChange} // line connect event
         onConnect={onConnect} // connect bolganda event
         fitView // barcha cardlarni ekranga sigdirish
-        // nodeTypes={nodeTypes} // custom card
+      // nodeTypes={nodeTypes} // custom card
       >
-        <Background bgColor={backgroundColor}/>
+        <Background bgColor={backgroundColor} />
         <Controls
           position='bottom-center'
           orientation='horizontal'
           style={controlsStyle}
         /> {/* Control panel */}
-        <MiniMap nodeStrokeWidth={3} {...miniMapColors}/>
+        <MiniMap nodeStrokeWidth={3} {...miniMapColors} />
         {/* <ShapeGrid
           speed={0}
           squareSize={40}

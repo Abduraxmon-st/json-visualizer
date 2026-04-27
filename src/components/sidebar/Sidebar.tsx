@@ -5,6 +5,7 @@ import { Braces, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/context/SidebarContext";
+import { useTypeScriptConverter } from "@/context/TypeScriptConverterContext";
 import { useWorkspaceView } from "@/context/ViewContext";
 import { cn } from "@/lib/utils";
 
@@ -21,12 +22,21 @@ const Sidebar = ({ dictionary }: SidebarProps) => {
   const isOpen = useSidebar((state) => state.isOpen);
   const toggleSidebar = useSidebar((state) => state.toggleSidebar);
   const activeView = useWorkspaceView((state) => state.activeView);
+  const convertJsonToTypeScript = useTypeScriptConverter(
+    (state) => state.convertJson,
+  );
   const [jsonInput, setJsonInput] = useState("");
   const [position, setPosition] = useState<NodePosition>("top");
   const isTypeScriptView = activeView === "typescript";
 
   const clearJsonInput = () => {
     setJsonInput("");
+  };
+
+  const runPrimaryAction = () => {
+    if (isTypeScriptView) {
+      convertJsonToTypeScript(jsonInput);
+    }
   };
 
   return (
@@ -91,7 +101,11 @@ const Sidebar = ({ dictionary }: SidebarProps) => {
               className="size-full resize-none rounded-2xl border border-border bg-background/80 p-3 pr-11 text-sm leading-6 text-foreground shadow-inner outline-none transition placeholder:text-muted-foreground/70 focus:border-ring focus:ring-3 focus:ring-ring/30 dark:bg-input/20"
               id="json-input"
               onChange={(event) => setJsonInput(event.target.value)}
-              placeholder={dictionary.placeholder}
+              placeholder={
+                isTypeScriptView
+                  ? dictionary.typescriptPlaceholder
+                  : dictionary.placeholder
+              }
               spellCheck={false}
               value={jsonInput}
             />
@@ -147,7 +161,7 @@ const Sidebar = ({ dictionary }: SidebarProps) => {
               <Button onClick={clearJsonInput} type="button" variant="outline">
                 {dictionary.clearLabel}
               </Button>
-              <Button type="button">
+              <Button onClick={runPrimaryAction} type="button">
                 {isTypeScriptView
                   ? dictionary.convertLabel
                   : dictionary.visualizeLabel}

@@ -1,19 +1,55 @@
 "use client";
 
-import { Copy } from "lucide-react";
+import { useState } from "react";
+import JsonView from "@uiw/react-json-view";
+import { darkTheme } from "@uiw/react-json-view/dark";
+import { lightTheme } from "@uiw/react-json-view/light";
+import { Copy, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/context/SidebarContext";
+import { useTheme } from "@/context/ThemeContext";
+import { useTypeScriptConverter } from "@/context/TypeScriptConverterContext";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
 type TypeScriptDictionary = Dictionary["typescript"];
+type OutputTab = "type" | "json";
 
 interface TypeScriptWorkspaceProps {
   dictionary: TypeScriptDictionary;
 }
 
 const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
+  const { theme } = useTheme();
   const isSidebarOpen = useSidebar((state) => state.isOpen);
+  const clearOutput = useTypeScriptConverter((state) => state.clearOutput);
+  const error = useTypeScriptConverter((state) => state.error);
+  const jsonValue = useTypeScriptConverter((state) => state.jsonValue);
+  const output = useTypeScriptConverter((state) => state.output);
+  const rootName = useTypeScriptConverter((state) => state.rootName);
+  const setRootName = useTypeScriptConverter((state) => state.setRootName);
+  const status = useTypeScriptConverter((state) => state.status);
+  const [activeOutputTab, setActiveOutputTab] = useState<OutputTab>("type");
+  const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
+  const jsonViewTheme = theme === "dark" ? darkTheme : lightTheme;
+  const outputText =
+    status === "error"
+      ? error === "empty"
+        ? dictionary.emptyJsonMessage
+        : dictionary.invalidJsonMessage
+      : output || dictionary.placeholder;
+  const canCopy = Boolean(output);
+  const canClear = Boolean(output || jsonValue || status === "error");
+
+  const copyOutput = async () => {
+    if (!output) {
+      return;
+    }
+
+    await navigator.clipboard.writeText(output);
+    setCopyState("copied");
+    window.setTimeout(() => setCopyState("idle"), 1200);
+  };
 
   return (
     <main
@@ -33,9 +69,16 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
             {dictionary.description}
           </p>
         </div>
-        <Button disabled type="button" variant="outline">
+        <Button
+          disabled={!canCopy}
+          onClick={copyOutput}
+          type="button"
+          variant="outline"
+        >
           <Copy aria-hidden="true" />
-          {dictionary.copyLabel}
+          {copyState === "copied"
+            ? dictionary.copiedLabel
+            : dictionary.copyLabel}
         </Button>
       </div>
 
@@ -49,10 +92,11 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
           </label>
           <input
             className="h-9 rounded-xl border border-border bg-background px-3 text-sm outline-none transition placeholder:text-muted-foreground/70 focus:border-ring focus:ring-3 focus:ring-ring/30 dark:bg-input/20"
-            defaultValue="Root"
             id="type-name"
+            onChange={(event) => setRootName(event.target.value)}
             spellCheck={false}
             type="text"
+            value={rootName}
           />
 
           <label
@@ -70,19 +114,96 @@ const TypeScriptWorkspace = ({ dictionary }: TypeScriptWorkspaceProps) => {
               {dictionary.interfaceLabel}
             </label>
             <label className="flex items-center gap-2 rounded-lg border border-border bg-background/80 px-3 py-2 dark:bg-input/20">
-              <input readOnly type="checkbox" />
+              <input checked readOnly type="checkbox" />
               {dictionary.optionalLabel}
             </label>
           </div>
         </section>
 
         <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border bg-white/95 shadow-sm backdrop-blur dark:bg-bgColor/95">
-          <div className="flex h-11 shrink-0 items-center border-b border-border/70 px-3 text-sm font-medium text-muted-foreground">
-            {dictionary.outputLabel}
+          <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 px-3 text-sm font-medium text-muted-foreground">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="shrink-0">{dictionary.outputLabel}</span>
+              <div
+                aria-label={dictionary.outputTabsLabel}
+                className="flex items-center rounded-full border border-border bg-background/70 p-0.5 dark:bg-input/20"
+                role="tablist"
+              >
+                <button
+                  aria-selected={activeOutputTab === "type"}
+                  className={cn(
+                    "h-7 rounded-full px-3 text-xs font-medium transition-colors",
+                    activeOutputTab === "type"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                  )}
+                  onClick={() => setActiveOutputTab("type")}
+                  role="tab"
+                  type="button"
+                >
+                  {dictionary.typeTabLabel}
+                </button>
+                <button
+                  aria-selected={activeOutputTab === "json"}
+                  className={cn(
+                    "h-7 rounded-full px-3 text-xs font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
+                    activeOutputTab === "json"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                  )}
+                  disabled={!jsonValue}
+                  onClick={() => setActiveOutputTab("json")}
+                  role="tab"
+                  type="button"
+                >
+                  {dictionary.jsonTabLabel}
+                </button>
+              </div>
+            </div>
+            <Button
+              disabled={!canClear}
+              onClick={clearOutput}
+              size="sm"
+              type="button"
+              variant="ghost"
+            >
+              <X aria-hidden="true" />
+              {dictionary.clearLabel}
+            </Button>
           </div>
-          <pre className="min-h-0 flex-1 overflow-auto p-4 font-mono text-sm leading-6 text-foreground">
-            <code>{dictionary.placeholder}</code>
-          </pre>
+          <div className="min-h-0 flex-1 overflow-auto p-4">
+            {activeOutputTab === "json" && jsonValue ? (
+              <div className="rounded-lg border border-border bg-background/70 p-3 dark:bg-input/20 h-full">
+                <JsonView
+                  collapsed={1}
+                  displayDataTypes={false}
+                  enableClipboard
+                  keyName={rootName}
+                  shortenTextAfterLength={80}
+                  style={{
+                    ...jsonViewTheme,
+                    backgroundColor: "transparent",
+                    fontFamily: "var(--font-mono, monospace)",
+                    fontSize: "13px",
+                  }}
+                  value={jsonValue}
+                />
+              </div>
+            ) : (
+              <pre
+                className={cn(
+                  "font-mono text-sm leading-6",
+                  status === "error"
+                    ? "text-destructive"
+                    : output
+                      ? "text-foreground"
+                      : "text-muted-foreground",
+                )}
+              >
+                <code>{outputText}</code>
+              </pre>
+            )}
+          </div>
         </section>
       </div>
     </main>

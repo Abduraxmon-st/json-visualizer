@@ -30,7 +30,8 @@
       "bottom": "Bottom",
       "right": "Right"
     },
-    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}"
+    "placeholder": "{\n  \"name\": \"Demo\",\n  \"items\": []\n}",
+    "typescriptPlaceholder": "{\n  \"cats\": [\n    { \"name\": \"Kittin\" },\n    { \"name\": \"Mittin\" }\n  ],\n  \"favoriteNumber\": 42,\n  \"favoriteWord\": \"Hello\"\n}"
   },
   "flow": {
     "nodeOneLabel": "Узел 1",
@@ -44,7 +45,14 @@
     "interfaceLabel": "Interface",
     "optionalLabel": "Optional поля",
     "outputLabel": "TypeScript output",
+    "outputTabsLabel": "Вид output",
+    "typeTabLabel": "Type",
+    "jsonTabLabel": "JSON",
     "copyLabel": "Copy",
+    "clearLabel": "Clear",
+    "copiedLabel": "Copied",
+    "emptyJsonMessage": "Введите JSON.",
+    "invalidJsonMessage": "Неверный формат JSON.",
     "placeholder": "interface Root {\n  // JSON type появится здесь\n}"
   }
 }
